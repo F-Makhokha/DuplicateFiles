@@ -1,0 +1,17 @@
+#include <stdio.h>
+
+int main(int argc, char *argv[])
+{
+	int k = 3;
+	
+	int *pk = &k;
+
+	printf("\n Pinter value, pk = %x\n", pk);
+	printf("\n Dereferancing the pointer : *pk = %d \n", *pk);
+	
+	*pk  = 5;
+	
+	printf("\n after *pk = 5: k = %d\n", k);
+
+	return 0;
+}

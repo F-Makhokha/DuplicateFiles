@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <malloc.h>
+
+
+typedef struct PointStruct
+{
+	double x, y;
+}Point;
+
+int main(int argc, char* argv[])
+{
+	int numPoints = 0;
+	/* Query the number of point for the polygon (e.g. 3 for */
+	/* triangle and 7 for septangle)
+	*/
+
+	while (numPoints < 3)
+	{
+		printf("Polygon: numPoints = ");
+		scanf("%d", &numPoints);
+		if (numPoints < 3)
+			printf("Error: a polygon must have at least 3 points.\n");
+	}
+
+	/* Now grab the memory for the number of points.*/
+	
+	Point *polygon = (Point *)malloc(numPoints * sizeof(Point));
+	
+	/* Check whether the operating system could supply */
+	/* us the memory we requested.
+	*/
+	
+	if (polygon == NULL)
+	{
+		printf("ERROR: ran out of memory.");
+		return -1;
+	}
+
+	/* Construct the polygon */
+	
+	int i;
+
+	for (i = 0; i < numPoints; ++i)
+	{
+		printf("Enter point %d: x y = ", i+1);
+		scanf("%lf %lf", &polygon[i].x, &polygon[i].y);
+		
+		/* note that we directly use the array element */
+		/* access on our pointer variable.
+		*/
+	}
+
+	/* Print the polygon */
+
+	printf("\nYou have now created the following polygon:\n{");
+
+	for (i = 0; i < numPoints; ++i)
+		printf(" (%f,%f) ", polygon[i].x, polygon[i].y);
+		printf("}\n\n");
+		/* Reporting the memory positions of the polygon points: */
+
+	for (i=0; i<numPoints; ++i)
+		printf("Start of memory position for point %d: %x\n", i, &polygon[i]);
+		printf("\n\n");
+		/* Release the memory allocated for the polygon */
+		free(polygon);
+		printf("After freeing the memory: polygon = %x\n", polygon);
+		polygon = NULL;
+	return 0;
+}

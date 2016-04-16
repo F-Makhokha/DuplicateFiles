@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Parabola{
+	double a,b,c;
+};
+
+struct Point{
+	double x,y;
+};
+
+
+struct Point calcTurningPoint(struct Parabola p){
+	
+	struct Point turningPoint;
+
+	turningPoint.x = (-p.b/(2*p.a));
+	turningPoint.y = p.a*turningPoint.x*turningPoint.x + p.b*turningPoint.x + p.c;
+	return turningPoint;
+}	
+
+int main(int argc, char *argv[])
+{
+	struct Parabola parabola = {1,0,0};
+	
+	if(argc == 4){
+		parabola.a = atof(argv[1]);
+		parabola.b = atof(argv[2]);
+		parabola.c = atof(argv[3]);
+	}
+	else{
+		printf("\nEnter Parabolla Coefficient: a,b,c: \n");
+		scanf("%lf %lf %lf", &parabola.a, &parabola.b, &parabola.c);	
+	}				
+
+	struct Point turningPoint = calcTurningPoint(parabola);
+
+	printf("\n turning point of %fx^2 + %fx + %f = (%f, %f)\n",
+			parabola.a, parabola.b, parabola.c, turningPoint.x, turningPoint.y );
+	return 0;
+}

@@ -1,0 +1,132 @@
+#include <stdio.h>
+#include <malloc.h>
+#include <stdlib.h>
+
+struct Node
+{
+	double data;
+	
+	struct Node *next;
+	struct Node *previous;
+};
+
+struct Node* createNode(double data)
+{
+	struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+	
+	newNode->data = data;
+	newNode->next = newNode;
+	newNode->previous = newNode;
+	
+	return newNode;
+}
+
+void appendNode(struct Node *head, struct Node *newNode)
+{
+	struct Node *oldTail = head->previous;
+	
+	oldTail->next = newNode;
+	head->previous = newNode;
+	newNode->previous = oldTail;
+	newNode->next = head;
+}
+
+void append(struct Node *head, double data)
+{
+	struct Node *newNode = createNode(data);
+
+	appendNode(head, newNode);
+}
+
+double removeNode(struct Node* nodeToBeRemovedFromList)
+{
+	struct Node *previousNode = nodeToBeRemovedFromList->previous;
+	struct Node *nextNode = nodeToBeRemovedFromList->next;
+
+	previousNode->next = nextNode;
+	nextNode->previous = previousNode;
+	double data = nodeToBeRemovedFromList->data;
+	free(nodeToBeRemovedFromList);
+
+	return data;
+}
+
+double removeNodeAt(struct Node* head, int index)
+{
+	struct Node *node = head;
+	
+	int i;
+	for (i=1; i<index; ++i)
+	{
+		node = node->next;
+	}
+
+	return removeNode(node);
+}
+
+void deleteList(struct Node* head)
+{
+	struct Node *lastNode = head->previous;
+
+	while (lastNode != head)
+	{
+		removeNode(lastNode);
+	lastNode = head->previous;
+	}
+	removeNode(head);
+}
+
+void insertNodeBefore(struct Node *node, struct Node *newNode)
+{
+	struct Node *nextNode = node->next;
+	
+	nextNode->previous = newNode;
+	node->next = newNode;
+	newNode->next = nextNode;
+	newNode->previous = node;
+}
+
+void insertBefore(struct Node *node, double data)
+{
+	struct Node* newNode = createNode(data);
+	
+	insertNodeBefore(node, newNode);
+}
+
+void insertIntoList(struct Node* head, int index, double data)
+{
+	struct Node *node = head;
+
+	int i;
+	for (i=1; i<index; ++i)
+		node = node->next;
+		insertBefore(node, data);
+}
+
+void printList(struct Node *head)
+{
+	struct Node *iter = head;
+
+	while (iter->next != head)
+	{
+		printf("%f, ", iter->data);
+		iter = iter->next;
+	}
+	printf("%f\n", iter->data);
+}
+
+int main(int argc, char *argv[])
+{
+	struct Node *head = createNode(11.0);
+
+	append(head, 22.1);
+	append(head, 33.2);
+	append(head, 44.3);
+	printList(head);
+	insertIntoList(head, 2, 999.99);
+	printList(head);
+	printf("now deleting list\n");
+	deleteList(head);
+
+	return 0;
+}
