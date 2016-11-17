@@ -25,7 +25,8 @@ def compare_data_in_files(fobj, chunk_size=1024):
         chunk = fobj.read(chunk_size)
         if not chunk:
             return
-        yield chunk
+        yield chunk 
+        #tetse
 
 def perfom_process_check(paths, hash=hashlib.sha1):
     hashes = {}
@@ -56,3 +57,5 @@ if __name__ == "__main__":
     "python analysedirectory nonduplicates" or
     "python analysedirectory duplicates"
     '''
+    print "Tests"
+#testing git
