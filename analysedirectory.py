@@ -58,4 +58,5 @@ if __name__ == "__main__":
     "python analysedirectory duplicates"
     '''
     print "Tests"
+    print ("tetse  2")
 #testing git
