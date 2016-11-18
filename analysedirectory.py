@@ -57,6 +57,5 @@ if __name__ == "__main__":
     "python analysedirectory nonduplicates" or
     "python analysedirectory duplicates"
     '''
-    print "Tests"
-    print ("tetse  2")
+    print "Tests second"
 #testing git
