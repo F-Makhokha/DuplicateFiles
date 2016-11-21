@@ -59,4 +59,8 @@ if __name__ == "__main__":
     '''
     print "Tests second"
     print ("Testing local")
+    print ("Fannie and hope just a test")
+
+    
+    
 #testing git
